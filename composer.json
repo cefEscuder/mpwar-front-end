@@ -8,7 +8,7 @@
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "autoload-dev": {
-        "psr-4": { "Tests\\": "tests/" }
+        "psr-4": { "Tests\\": "src/FrontBundle/Test/" }
     },
     "require": {
         "php": ">=5.5.9",
@@ -25,7 +25,6 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0",
         "phpunit/phpunit": "^4.8",
         "mockery/mockery": "^0.9.9",
         "fzaninotto/faker": "^1.6"
