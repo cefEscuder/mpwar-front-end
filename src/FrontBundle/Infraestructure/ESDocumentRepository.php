@@ -9,6 +9,8 @@
 namespace FrontBundle\Infraestructure;
 
 use Elastica\Index;
+use Elastica\Query;
+use Elastica\Query\MatchAll;
 use FrontBundle\Domain\Repository\DocumentRepository;
 use FrontBundle\Domain\ValueObject\DocumentCollection;
 
@@ -39,6 +41,9 @@ class ESDocumentRepository implements DocumentRepository
 
     public function getTotalNumberOfDocuments(): string
     {
-        // TODO: Implement getTotalNumberOfDocuments() method.
+        $query = new Query(new MatchAll());
+        $query->setSize(0);
+        $result = $this->esIndex->search($query);
+        return $result->getTotalHits();
     }
 }

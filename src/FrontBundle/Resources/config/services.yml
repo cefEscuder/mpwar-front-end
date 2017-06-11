@@ -18,4 +18,9 @@ services:
             - "@fake_queue_document_handler"
             - "@es_repository"
 
+    index_information_use_case:
+        class: FrontBundle\Application\IndexInformationUseCase
+        arguments:
+            - "@es_repository"
+
 
