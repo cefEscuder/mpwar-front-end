@@ -11,6 +11,7 @@ namespace FrontBundle\Test\Behaviour;
 use FrontBundle\Application\DocumentSaver;
 use FrontBundle\Domain\Repository\DocumentRepository;
 use FrontBundle\Domain\Service\QueueDocumentsHandler;
+use FrontBundle\Domain\ValueObject\DocumentCollection;
 use FrontBundle\Test\Infraestructure\Stubs\DocumentCollectionStub;
 use FrontBundle\Test\Infraestructure\UnitTestCase;
 use Mockery\Mock;
@@ -32,21 +33,32 @@ class DocumentSaverTest extends UnitTestCase
     }
 
     /** @test */
-    public function itShould()
+    public function itShouldSaveDocumentsIntoESRepository()
     {
         $documentCollection = DocumentCollectionStub::createWithTwoElements();
 
+        $this->getDocumentsFromHandler($documentCollection);
+
+        $this->saveDocumentsIntoESRepository($documentCollection);
+
+        $this->assertNull($this->DocumentSaver->execute());
+    }
+
+    private function getDocumentsFromHandler(DocumentCollection $documentCollection)
+    {
         $this->queueDocumentsHandler
             ->shouldReceive('getDocuments')
             ->once()
             ->withNoArgs()
             ->andReturn($documentCollection);
+    }
+
+    private function saveDocumentsIntoESRepository(DocumentCollection $documentCollection)
+    {
         $this->documentRepository
             ->shouldReceive('add')
             ->once()
             ->with($documentCollection)
             ->andReturnNull();
-
-        $this->assertNull($this->DocumentSaver->execute());
     }
 }

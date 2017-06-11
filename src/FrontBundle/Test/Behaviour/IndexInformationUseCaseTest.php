@@ -28,35 +28,51 @@ class IndexInformationUseCaseTest extends UnitTestCase
     }
 
     /** @test */
-    public function itShould()
+    public function itShouldGetTheInformationForTheIndex()
     {
         $totalNumberOfDocuments = 4;
 
-        $result =[
+        $result = [
             'totalNumberOfDocuments' => $totalNumberOfDocuments,
             'documentsByCategory' => [],
             'documentsByDate' => []
         ];
 
+        $this->getTotalNumberOfDocuments($totalNumberOfDocuments);
+
+        $this->getNumberOfDocumentsByCategory();
+
+        $this->getNumberOfDocumentsByDate();
+
+        $this->assertEquals($result, $this->indexInformationUseCase->execute());
+    }
+
+    private function getTotalNumberOfDocuments($totalNumberOfDocuments)
+    {
         $this->documentRepostirory
             ->shouldReceive('getTotalNumberOfDocuments')
             ->once()
             ->withNoArgs()
             ->andReturn($totalNumberOfDocuments);
 
+    }
+
+    private function getNumberOfDocumentsByCategory()
+    {
         $this->documentRepostirory
             ->shouldReceive('getNumberOfDocumentsByCategory')
             ->once()
             ->withNoArgs()
             ->andReturn([]);
+    }
 
+    private function getNumberOfDocumentsByDate()
+    {
         $this->documentRepostirory
             ->shouldReceive('getNumberOfDocumentsByDate')
             ->once()
             ->withNoArgs()
             ->andReturn([]);
-
-        $this->assertEquals($result, $this->indexInformationUseCase->execute());
     }
 
 }

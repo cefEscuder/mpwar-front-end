@@ -18,12 +18,13 @@ class IndexInformationUseCase
         $this->documentRepository = $documentRepository;
     }
 
-    public function execute(){
+    public function execute()
+    {
         $totalNumberOfDocuments = $this->documentRepository->getTotalNumberOfDocuments();
         $documentsByCategory = $this->documentRepository->getNumberOfDocumentsByCategory();
         $documentsByDate = $this->documentRepository->getNumberOfDocumentsByDate();
 
-        return[
+        return [
             'totalNumberOfDocuments' => $totalNumberOfDocuments,
             'documentsByCategory' => $documentsByCategory,
             'documentsByDate' => $documentsByDate

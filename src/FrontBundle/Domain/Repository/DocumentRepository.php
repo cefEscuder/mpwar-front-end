@@ -14,7 +14,7 @@ interface DocumentRepository
 {
     public function add(DocumentCollection $documents);
 
-    public function getNumberOfDocumentsByDate() :array;
+    public function getNumberOfDocumentsByDate(): array;
 
     public function getNumberOfDocumentsByCategory(): array;
 
