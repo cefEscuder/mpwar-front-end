@@ -23,12 +23,10 @@ abstract class Collection implements ArrayAccess
 
         if ($key == null) {
             $this->items[] = $obj;
-        }
-        else {
+        } else {
             if (isset($this->items[$key])) {
                 throw new Exception("Key $key already in use.");
-            }
-            else {
+            } else {
                 $this->items[$key] = $obj;
             }
         }
@@ -64,8 +62,7 @@ abstract class Collection implements ArrayAccess
     {
         if (isset($this->items[$key])) {
             return $this->items[$key];
-        }
-        else {
+        } else {
             throw new Exception("Invalid key $key.");
         }
 
@@ -96,7 +93,8 @@ abstract class Collection implements ArrayAccess
         return;
     }
 
-    public function getArray(){
+    public function getArray()
+    {
         return $this->items;
     }
 }

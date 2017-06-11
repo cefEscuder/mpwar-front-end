@@ -26,4 +26,19 @@ class ESDocumentRepository implements DocumentRepository
     {
         $this->esIndex->addDocuments($documents->getArray());
     }
+
+    public function getNumberOfDocumentsByDate(): array
+    {
+        // TODO: Implement getNumberOfDocumentsByDate() method.
+    }
+
+    public function getNumberOfDocumentsByCategory(): array
+    {
+        // TODO: Implement getNumberOfDocumentsByCategory() method.
+    }
+
+    public function getTotalNumberOfDocuments(): string
+    {
+        // TODO: Implement getTotalNumberOfDocuments() method.
+    }
 }

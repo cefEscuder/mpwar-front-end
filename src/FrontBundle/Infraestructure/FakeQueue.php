@@ -11,7 +11,8 @@ namespace FrontBundle\Infraestructure;
 
 class FakeQueue
 {
-    public function all(){
+    public function all()
+    {
 
         return [
             json_encode([

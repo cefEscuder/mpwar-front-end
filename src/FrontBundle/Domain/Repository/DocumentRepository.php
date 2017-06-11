@@ -8,10 +8,15 @@
 
 namespace FrontBundle\Domain\Repository;
 
-use FrontBundle\Domain\Entity\Document;
 use FrontBundle\Domain\ValueObject\DocumentCollection;
 
 interface DocumentRepository
 {
     public function add(DocumentCollection $documents);
+
+    public function getNumberOfDocumentsByDate() :array;
+
+    public function getNumberOfDocumentsByCategory(): array;
+
+    public function getTotalNumberOfDocuments(): string;
 }

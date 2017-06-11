@@ -31,7 +31,7 @@ class FakeQueueDocumentsHandler implements QueueDocumentsHandler
         $documentCollection = new DocumentCollection();
 
         foreach ($stringDocuments as $stringDocument) {
-            $document = new Document('',json_decode($stringDocument), self::INDEX_AND_MAPPING, self::INDEX_AND_MAPPING);
+            $document = new Document('', json_decode($stringDocument), self::INDEX_AND_MAPPING, self::INDEX_AND_MAPPING);
             $documentCollection->add($document);
         }
 

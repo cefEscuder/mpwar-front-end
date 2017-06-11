@@ -8,7 +8,6 @@
 
 namespace FrontBundle\Test\Behaviour;
 
-
 use FrontBundle\Application\DocumentSaver;
 use FrontBundle\Domain\Repository\DocumentRepository;
 use FrontBundle\Domain\Service\QueueDocumentsHandler;
