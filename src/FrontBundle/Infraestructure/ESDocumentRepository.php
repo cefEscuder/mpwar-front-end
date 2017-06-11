@@ -8,6 +8,8 @@
 
 namespace FrontBundle\Infraestructure;
 
+use Elastica\Aggregation\DateHistogram;
+use Elastica\Aggregation\Terms;
 use Elastica\Index;
 use Elastica\Query;
 use Elastica\Query\MatchAll;
@@ -31,12 +33,24 @@ class ESDocumentRepository implements DocumentRepository
 
     public function getNumberOfDocumentsByDate(): array
     {
-        // TODO: Implement getNumberOfDocumentsByDate() method.
+        $query = new Query(new MatchAll());
+        $query->setSize(0);
+        $dateAggregation = new DateHistogram('dateHistogram', 'created_at', 'day');
+        $dateAggregation->setFormat("YYYY-MM-dd");
+        $query->addAggregation($dateAggregation);
+        $results = $this->esIndex->search($query);
+        return $results->getAggregations();
     }
 
     public function getNumberOfDocumentsByCategory(): array
     {
-        // TODO: Implement getNumberOfDocumentsByCategory() method.
+        $query = new Query(new MatchAll());
+        $query->setSize(0);
+        $categoryAggregation = new Terms('category');
+        $categoryAggregation->setField('category');
+        $query->addAggregation($categoryAggregation);
+        $results = $this->esIndex->search($query);
+        return $results->getAggregations();
     }
 
     public function getTotalNumberOfDocuments(): string

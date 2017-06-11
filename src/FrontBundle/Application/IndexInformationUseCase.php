@@ -20,8 +20,14 @@ class IndexInformationUseCase
 
     public function execute(){
         $totalNumberOfDocuments = $this->documentRepository->getTotalNumberOfDocuments();
+        $documentsByCategory = $this->documentRepository->getNumberOfDocumentsByCategory();
+        $documentsByDate = $this->documentRepository->getNumberOfDocumentsByDate();
 
-        return $totalNumberOfDocuments;
+        return[
+            'totalNumberOfDocuments' => $totalNumberOfDocuments,
+            'documentsByCategory' => $documentsByCategory,
+            'documentsByDate' => $documentsByDate
+        ];
     }
 
 }
