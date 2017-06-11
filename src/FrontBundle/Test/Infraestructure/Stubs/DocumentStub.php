@@ -8,9 +8,9 @@
 
 namespace FrontBundle\Test\Infraestructure\Stubs;
 
-use FrontBundle\Domain\Entity\Document;
+use Elastica\Document;
 
-class DocumentStub
+class DocumentStub extends Stub
 {
     public static function random()
     {
@@ -19,7 +19,20 @@ class DocumentStub
 
     public static function create()
     {
-        return new Document();
-    }
+        return new Document(
+            '',
+            [
+                'source' => Stub::factory()->word,
+                'category' => Stub::factory()->word,
+                'location' => Stub::factory()->country,
+                'content' => Stub::factory()->sentence(),
+                'created_at' => Stub::factory()->date(),
+                'author_name' => Stub::factory()->name,
+                'language' => Stub::factory()->languageCode
 
+            ],
+            'documents',
+            'documents'
+        );
+    }
 }

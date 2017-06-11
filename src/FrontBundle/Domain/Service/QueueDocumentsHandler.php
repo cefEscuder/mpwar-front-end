@@ -13,5 +13,4 @@ use FrontBundle\Domain\ValueObject\DocumentCollection;
 interface QueueDocumentsHandler
 {
     public function getDocuments(): DocumentCollection;
-
 }

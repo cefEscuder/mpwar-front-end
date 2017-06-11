@@ -9,8 +9,9 @@
 namespace FrontBundle\Domain\Repository;
 
 use FrontBundle\Domain\Entity\Document;
+use FrontBundle\Domain\ValueObject\DocumentCollection;
 
 interface DocumentRepository
 {
-    public function add(Document $document);
+    public function add(DocumentCollection $documents);
 }

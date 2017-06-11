@@ -67,3 +67,23 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+
+#ElasticSearch Client configuration
+fos_elastica:
+    clients:
+        default: {host: localhost, port: 9200}
+    indexes:
+        documents:
+            types:
+                documents:
+                    properties:
+                        source: ~
+                        keyword: ~
+                        category: ~
+                        location: ~
+                        content: ~
+                        created_at: ~
+                        author_name: ~
+                        language: ~
+

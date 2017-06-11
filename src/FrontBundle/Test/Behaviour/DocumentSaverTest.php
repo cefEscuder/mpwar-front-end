@@ -42,17 +42,10 @@ class DocumentSaverTest extends UnitTestCase
             ->once()
             ->withNoArgs()
             ->andReturn($documentCollection);
-
         $this->documentRepository
             ->shouldReceive('add')
             ->once()
-            ->with($documentCollection[0])
-            ->andReturnNull();
-
-        $this->documentRepository
-            ->shouldReceive('add')
-            ->once()
-            ->with($documentCollection[1])
+            ->with($documentCollection)
             ->andReturnNull();
 
         $this->assertNull($this->DocumentSaver->execute());

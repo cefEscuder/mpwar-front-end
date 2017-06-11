@@ -26,10 +26,8 @@ class DocumentSaver
     public function execute()
     {
         $documents = $this->queueDocumentsHandler->getDocuments();
-        foreach ($documents as $document){
-            $this->documentRepository->add($document);
-        }
+
+        $this->documentRepository->add($documents);
 
     }
-
 }

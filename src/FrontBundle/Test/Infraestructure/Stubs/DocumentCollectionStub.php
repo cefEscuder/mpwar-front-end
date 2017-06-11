@@ -10,24 +10,25 @@ namespace FrontBundle\Test\Infraestructure\Stubs;
 
 use FrontBundle\Domain\ValueObject\DocumentCollection;
 
-class DocumentCollectionStub
+class DocumentCollectionStub extends Stub
 {
     public static function random()
     {
         return self::create();
     }
 
-    public static function create(...$documents)
+    public static function create()
     {
-        return new DocumentCollection(...$documents);
+        return new DocumentCollection();
     }
 
     public static function createWithTwoElements()
     {
-        return self::create(
-            DocumentStub::create(),
-            DocumentStub::create()
-        );
+        $documentCollection = self::create();
+        $documentCollection->add( DocumentStub::create());
+        $documentCollection->add( DocumentStub::create());
+
+        return $documentCollection;
     }
 
 }

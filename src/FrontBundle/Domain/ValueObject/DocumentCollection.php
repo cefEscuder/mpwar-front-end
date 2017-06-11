@@ -8,7 +8,7 @@
 
 namespace FrontBundle\Domain\ValueObject;
 
-use FrontBundle\Domain\Entity\Document;
+use Elastica\Document;
 
 class DocumentCollection extends Collection
 {

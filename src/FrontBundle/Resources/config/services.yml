@@ -1,4 +1,21 @@
 services:
-#    front.example:
-#        class: FrontBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    fake_queue:
+        class: FrontBundle\Infraestructure\FakeQueue
+
+    fake_queue_document_handler:
+        class: FrontBundle\Infraestructure\FakeQueueDocumentsHandler
+        arguments:
+            - "@fake_queue"
+
+    es_repository:
+        class: FrontBundle\Infraestructure\ESDocumentRepository
+        arguments:
+            - "@fos_elastica.index.documents"
+
+    document_saver:
+        class: FrontBundle\Application\DocumentSaver
+        arguments:
+            - "@fake_queue_document_handler"
+            - "@es_repository"
+
+
