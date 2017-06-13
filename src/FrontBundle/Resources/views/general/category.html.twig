@@ -1,0 +1,46 @@
+{% extends "FrontBundle:general:base.html.twig" %}
+{% block title %}Category{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <header class="row">
+            <div class= "page-header">
+                <h1> PromoFarma Trends </h1>
+            </div>
+        </header>
+        <main>
+            <section class="row" id="charts">
+                <div class="col-sm-6">
+                    <div class="panel panel-default" id="EvolutionOverTime">
+                        <div class="panel-heading">Evolution Over Time</div>
+                        <div class="panel-body"><canvas id="timeEvolution"></canvas></div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel panel-default" id="MostRelevantTwets">
+                        <div class="panel-heading">Most Relevant tweets</div>
+                        <div class="panel-body"> A Basic Panel </div>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="panel panel-default" id="geolocalization">
+                        <div class="panel-heading">Global Interest</div>
+                        <div class="panel-body" id="map"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    {% javascripts
+    '@FrontBundle/Resources/public/js/src/geoChart.js'
+    '@FrontBundle/Resources/public/js/src/LineChart.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

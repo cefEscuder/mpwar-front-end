@@ -1,0 +1,14 @@
+{
+  "name": "TFM_maqueta",
+  "version": "0.0.0",
+  "description": "Maqueta TFM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "chart.js": "~2.5.0"
+  }
+}
