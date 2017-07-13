@@ -10,7 +10,7 @@ services:
     es_repository:
         class: FrontBundle\Infraestructure\ESDocumentRepository
         arguments:
-            - "@fos_elastica.index.documents"
+            - "@fos_elastica.index.tfm_document"
 
     document_saver:
         class: FrontBundle\Application\DocumentSaver
@@ -18,9 +18,26 @@ services:
             - "@fake_queue_document_handler"
             - "@es_repository"
 
-    index_information_use_case:
-        class: FrontBundle\Application\IndexInformationUseCase
-        arguments:
-            - "@es_repository"
+    documents_by_date_use_case:
+            class: FrontBundle\Application\GetDocumentsByDateUseCase
+            arguments:
+                - "@es_repository"
+
+    documents_by_category_use_case:
+                class: FrontBundle\Application\GetDocumentsByCategoryUseCase
+                arguments:
+                    - "@es_repository"
+
+    total_documents_use_case:
+                class: FrontBundle\Application\GetTotalDocumentsUseCase
+                arguments:
+                    - "@es_repository"
+
+    average_sentiment_use_case:
+                    class: FrontBundle\Application\GetAverageSentimentUseCase
+                    arguments:
+                        - "@es_repository"
+
+
 
 

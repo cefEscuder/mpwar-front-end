@@ -23,6 +23,7 @@ class IndexInformationUseCaseTest extends UnitTestCase
 
     public function setUp()
     {
+        parent::setUp();
         $this->documentRepostirory = $this->mock(DocumentRepository::class);
         $this->indexInformationUseCase = new IndexInformationUseCase($this->documentRepostirory);
     }

@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Carles
- * Date: 09/06/2017
- * Time: 18:10
- */
 
 namespace FrontBundle\Domain\ValueObject;
-
 
 use ArrayAccess;
 use InvalidArgumentException;

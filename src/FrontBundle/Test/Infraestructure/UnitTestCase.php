@@ -19,6 +19,7 @@ class UnitTestCase extends TestCase
     {
         return Mockery::mock($interface);
     }
+
     public function tearDown()
     {
         parent::tearDown();

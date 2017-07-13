@@ -4,73 +4,36 @@
     {{ parent() }}
 {% endblock %}
 {% block content %}
-    <div class="container">
-        <header class="row">
-            <div class= "page-header">
-                <h1> PromoFarma Trends </h1>
+    <main>
+        <section class="row" id="Summary">
+            <div class="col-sm-12">
+                <header>
+                    <h3> Summary </h3>
+                </header>
             </div>
-        </header>
-        <main>
-            <section class="row" id="Summary">
-                <div class="col-sm-12">
-                    <header>
-                        <h3> General Evolution </h3>
-                    </header>
-                </div>
-                <div class="col-sm-6">
-                    <div class="panel panel-default" id="summaryChart">
-                        <div class="panel-heading"> General Evolution of Twits</div>
-                        <div class="panel-body">
-                            <canvas id="timeEvolution"></canvas>
-                        </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default" id="summaryChart">
+                    <div class="panel-heading">Documents evolution over time</div>
+                    <div class="panel-body">
+                        <canvas id="timeEvolution"></canvas>
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="panel panel-default" id="mostRelevantTwitts">
-                        <div class="panel-heading">Most Relevant Twits</div>
-                        <div class="panel-body">A Basic Panel</div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default" id="TweetsPerCategory">
+                    <div class="panel-heading">Number of documents per category</div>
+                    <div class="panel-body">
+                        <canvas id="categoryBarChart"></canvas>
                     </div>
                 </div>
-            </section>
-            <section class="row" id="Categories">
-                <div class="col-sm-12">
-                    <header>
-                        <h3> Categories </h3>
-                    </header>
-                </div>
-                <div class="col-sm-4 ">
-                    <div class="panel panel-default">
-                        <div class="panel-heading"><a href="{{ path('category') }}">#HEALTH</a></div>
-                        <div class="panel-body">
-                            <canvas class="donutChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading"><a href="{{ path('category') }}">#WELFARE</a></div>
-                        <div class="panel-body">
-                            <canvas class="donutChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading"><a href="{{ path('category') }}">#NUTRITION</a></div>
-                        <div class="panel-body">
-                            <canvas class="donutChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
+            </div>
+        </section>
+    </main>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     {% javascripts
-        '@FrontBundle/Resources/public/js/src/donutChart.js'
-        '@FrontBundle/Resources/public/js/src/LineChart.js'
+        '@FrontBundle/Resources/public/js/dist/index.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

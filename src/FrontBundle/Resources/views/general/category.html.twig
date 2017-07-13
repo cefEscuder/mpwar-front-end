@@ -4,42 +4,41 @@
     {{ parent() }}
 {% endblock %}
 {% block content %}
-    <div class="container">
+    <main>
         <header class="row">
-            <div class= "page-header">
-                <h1> PromoFarma Trends </h1>
+            <div class="col-sm-6">
+                <h2 data-category="{{ categoryName }}">{{ categoryName }}</h2>
             </div>
         </header>
-        <main>
-            <section class="row" id="charts">
-                <div class="col-sm-6">
-                    <div class="panel panel-default" id="EvolutionOverTime">
-                        <div class="panel-heading">Evolution Over Time</div>
-                        <div class="panel-body"><canvas id="timeEvolution"></canvas></div>
+        <section class="row" id="charts">
+            <div class="col-sm-6">
+                <div class="panel panel-default" id="EvolutionOverTime">
+                    <div class="panel-heading">Evolution over Time</div>
+                    <div class="panel-body"><canvas id="timeEvolution"></canvas></div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default" id="Sentiment">
+                    <div class="panel-heading">Sentiment</div>
+                    <div class="panel-body">
+                        <h3>{{ sentiment.sentiment_name }}</h3>
+                        <p>value: {{ sentiment.average_sentiment.value | number_format(2,'.', ',') }}</p>
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="panel panel-default" id="MostRelevantTwets">
-                        <div class="panel-heading">Most Relevant tweets</div>
-                        <div class="panel-body"> A Basic Panel </div>
-                    </div>
+            </div>
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="panel panel-default" id="geolocalization">
+                    <div class="panel-heading">Global Interest</div>
+                    <div class="panel-body" id="map"></div>
                 </div>
-                <div class="col-sm-8 col-sm-offset-2">
-                    <div class="panel panel-default" id="geolocalization">
-                        <div class="panel-heading">Global Interest</div>
-                        <div class="panel-body" id="map"></div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
+            </div>
+        </section>
+    </main>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     {% javascripts
-    '@FrontBundle/Resources/public/js/src/geoChart.js'
-    '@FrontBundle/Resources/public/js/src/LineChart.js'
+        '@FrontBundle/Resources/public/js/dist/category.js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

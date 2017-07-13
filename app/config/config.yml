@@ -74,16 +74,16 @@ fos_elastica:
     clients:
         default: {host: localhost, port: 9200}
     indexes:
-        documents:
+        tfm_document:
             types:
-                documents:
+                document:
                     properties:
                         source: ~
                         keyword: ~
                         category: ~
-                        location: ~
                         content: ~
                         created_at: ~
-                        author_name: ~
+                        author: ~
+                        author_location: ~
                         language: ~
 

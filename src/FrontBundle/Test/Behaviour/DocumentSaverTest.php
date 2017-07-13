@@ -27,6 +27,7 @@ class DocumentSaverTest extends UnitTestCase
 
     public function setUp()
     {
+        parent::setUp();
         $this->queueDocumentsHandler = $this->mock(QueueDocumentsHandler::class);
         $this->documentRepository = $this->mock(DocumentRepository::class);
         $this->DocumentSaver = new DocumentSaver($this->queueDocumentsHandler, $this->documentRepository);

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Carles
- * Date: 08/06/2017
- * Time: 19:07
- */
 
 namespace FrontBundle\Domain\Repository;
 
@@ -12,11 +6,13 @@ use FrontBundle\Domain\ValueObject\DocumentCollection;
 
 interface DocumentRepository
 {
-    public function add(DocumentCollection $documents);
+    public function add(DocumentCollection $documents) : void;
 
-    public function getNumberOfDocumentsByDate(): array;
+    public function getNumberOfDocumentsByDate($category = null): array;
 
     public function getNumberOfDocumentsByCategory(): array;
 
     public function getTotalNumberOfDocuments(): string;
+
+    public function getAverageSentiment($category = null) :array;
 }

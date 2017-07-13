@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Carles
- * Date: 08/06/2017
- * Time: 18:35
- */
 
 namespace FrontBundle\Application;
-
 
 use FrontBundle\Domain\Repository\DocumentRepository;
 use FrontBundle\Domain\Service\QueueDocumentsHandler;
@@ -26,8 +19,6 @@ class DocumentSaver
     public function execute()
     {
         $documents = $this->queueDocumentsHandler->getDocuments();
-
         $this->documentRepository->add($documents);
-
     }
 }
