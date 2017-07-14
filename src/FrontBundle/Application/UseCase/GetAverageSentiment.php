@@ -1,10 +1,10 @@
 <?php
 
-namespace FrontBundle\Application;
+namespace FrontBundle\Application\UseCase;
 
 use FrontBundle\Domain\Repository\DocumentRepository;
 
-class GetAverageSentimentUseCase
+class GetAverageSentiment
 {
     const MINIMUM_NEUTRAL_VALUE = -0.25;
 
@@ -17,18 +17,18 @@ class GetAverageSentimentUseCase
         $this->documentRepository = $documentRepository;
     }
 
-    public function execute($category=null) :array
+    public function execute($category = null): array
     {
         $sentiment = $this->documentRepository->getAverageSentiment($category);
         return $this->classifySentiment($sentiment);
 
     }
 
-    private function classifySentiment(array $sentiment) :array
+    private function classifySentiment(array $sentiment): array
     {
         $averageSentiment = $sentiment['average_sentiment']['value'];
         $sentimentName = null;
-        switch(true){
+        switch (true) {
             case $this->isNegativeSentiment($averageSentiment);
                 $sentimentName = "negative";
                 break;

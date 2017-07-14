@@ -9,7 +9,8 @@
     "compile_category": "browserify src/CategoryBoot.js -o dist/category.js -t [ babelify --presets [ es2015 ] ]",
     "minify_index": "uglifyjs --compress --mangle -- dist/index.js > dist/index.min.js",
     "minify_category": "uglifyjs --compress --mangle -- dist/category.js > dist/category.min.js",
-    "build": "npm run compile_index && npm run compile_category && npm run minify_index && npm run minify_category"
+    "build": "npm run compile_index && npm run compile_category && npm run minify_index && npm run minify_category",
+    "compile": "npm run compile_index && npm run compile_category"
   },
   "author": "",
   "license": "ISC",

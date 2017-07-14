@@ -8,12 +8,7 @@ class BarChartView extends EventEmitter{
         this._element = element;
     }
 
-    start(labels,data){
-        this._createBarChart(labels,data);
-        //this._setUpRedirectFunctionality();
-    }
-
-    _createBarChart(labels,data){
+    createBarChart(labels,data){
         const barChartData = {
             labels: labels,
             datasets: [{

@@ -2,15 +2,15 @@
 
 namespace FrontBundle\Controller;
 
-use FrontBundle\Application\GetAverageSentimentUseCase;
-use FrontBundle\Application\GetDocumentsByCategoryUseCase;
-use FrontBundle\Application\GetDocumentsByDateUseCase;
-use FrontBundle\Application\GetTotalDocumentsUseCase;
+use FrontBundle\Application\UseCase\GetAverageSentiment;
+use FrontBundle\Application\UseCase\GetDocumentsByCategory;
+use FrontBundle\Application\UseCase\GetDocumentsByDate;
+use FrontBundle\Application\UseCase\GetDocumentsByLocation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class EndPointController  extends Controller
+class EndPointController extends Controller
 {
     /**
      * @Route("/DocumentsByDate", name="DocumentsByDate")
@@ -18,9 +18,9 @@ class EndPointController  extends Controller
      */
     public function DocumentsByDateAction()
     {
-        /** @var GetDocumentsByDateUseCase $getDocumentsByDateUseCase */
-        $getDocumentsByDateUseCase = $this->get("documents_by_date_use_case");
-        $documentsByDate = $getDocumentsByDateUseCase->execute();
+        /** @var GetDocumentsByDate $getDocumentsByDate */
+        $getDocumentsByDate = $this->get("documents_by_date_use_case");
+        $documentsByDate = $getDocumentsByDate->execute();
 
         return new JsonResponse($documentsByDate);
     }
@@ -31,9 +31,9 @@ class EndPointController  extends Controller
      */
     public function DocumentsByCategoryAction()
     {
-        /** @var GetDocumentsByCategoryUseCase $getDocumentsByCategoryUseCase */
-        $getDocumentsByCategoryUseCase = $this->get("documents_by_category_use_case");
-        $documentsByCategory = $getDocumentsByCategoryUseCase->execute();
+        /** @var GetDocumentsByCategory $getDocumentsByCategory */
+        $getDocumentsByCategory = $this->get("documents_by_category_use_case");
+        $documentsByCategory = $getDocumentsByCategory->execute();
 
         return new JsonResponse($documentsByCategory);
     }
@@ -44,11 +44,24 @@ class EndPointController  extends Controller
      */
     public function AverageSentimentAction()
     {
-        /** @var GetAverageSentimentUseCase $getAverageSentimentUseCase */
-        $getAverageSentimentUseCase = $this->get("average_sentiment_use_case");
-        $averageSentiment = $getAverageSentimentUseCase->execute();
+        /** @var GetAverageSentiment $getAverageSentiment */
+        $getAverageSentiment = $this->get("average_sentiment_use_case");
+        $averageSentiment = $getAverageSentiment->execute();
 
         return new JsonResponse($averageSentiment);
+    }
+
+    /**
+     * @Route("/DocumentsByLocation", name="DocumentsByLocation")
+     *
+     */
+    public function DocumentsByLocation()
+    {
+        /** @var GetDocumentsByLocation $getDocumentsByLocation */
+        $getDocumentsByLocation = $this->get("documents_by_location_use_case");
+        $documentsByLocation = $getDocumentsByLocation->execute();
+
+        return new JsonResponse($documentsByLocation);
     }
 
     /**
@@ -57,10 +70,23 @@ class EndPointController  extends Controller
      */
     public function CategoryDocumentsByDateAction($category)
     {
-        /** @var GetDocumentsByDateUseCase $getDocumentsByDateUseCase */
-        $getDocumentsByDateUseCase = $this->get("documents_by_date_use_case");
-        $categoryDocumentsByDate = $getDocumentsByDateUseCase->execute($category);
+        /** @var GetDocumentsByDate $getDocumentsByDate */
+        $getDocumentsByDate = $this->get("documents_by_date_use_case");
+        $categoryDocumentsByDate = $getDocumentsByDate->execute($category);
 
         return new JsonResponse($categoryDocumentsByDate);
+    }
+
+    /**
+     * @Route("/Category/DocumentsByLocation/{category}", name="CategoryDocumentsByLocation")
+     *
+     */
+    public function CategoryDocumentsByLocationAction($category)
+    {
+        /** @var GetDocumentsByLocation $getDocumentsByLocation */
+        $getDocumentsByLocation = $this->get("documents_by_location_use_case");
+        $categoryDocumentsByLocation = $getDocumentsByLocation->execute($category);
+
+        return new JsonResponse($categoryDocumentsByLocation);
     }
 }

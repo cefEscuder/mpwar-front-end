@@ -17530,6 +17530,10 @@ var _BarChartView = require('./views/BarChartView');
 
 var _BarChartView2 = _interopRequireDefault(_BarChartView);
 
+var _GeoChartView = require('./views/GeoChartView');
+
+var _GeoChartView2 = _interopRequireDefault(_GeoChartView);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var timeGraphicViewCanvas = document.getElementById("timeEvolution");
@@ -17538,15 +17542,19 @@ var timeGraphicView = new _LineChartView2.default({ element: timeGraphicViewCanv
 var categoryBarChartCanvas = document.getElementById("categoryBarChart");
 var categoryBarChartView = new _BarChartView2.default({ element: categoryBarChartCanvas });
 
+var geoChartCanvas = document.getElementById("map");
+var geoChartView = new _GeoChartView2.default({ element: geoChartCanvas });
+
 var indexController = new _IndexController2.default({
     tfmModel: _TfmModel2.default,
     timeGraphicView: timeGraphicView,
-    categoryBarChartView: categoryBarChartView
+    categoryBarChartView: categoryBarChartView,
+    geoChartView: geoChartView
 });
 
 indexController.start();
 
-},{"./controllers/IndexController":52,"./models/TfmModel":53,"./views/BarChartView":54,"./views/LineChartView":55}],52:[function(require,module,exports){
+},{"./controllers/IndexController":52,"./models/TfmModel":53,"./views/BarChartView":54,"./views/GeoChartView":55,"./views/LineChartView":56}],52:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17561,13 +17569,15 @@ var IndexController = function () {
     function IndexController(_ref) {
         var tfmModel = _ref.tfmModel,
             timeGraphicView = _ref.timeGraphicView,
-            categoryBarChartView = _ref.categoryBarChartView;
+            categoryBarChartView = _ref.categoryBarChartView,
+            geoChartView = _ref.geoChartView;
 
         _classCallCheck(this, IndexController);
 
         this._tfmModel = tfmModel;
         this._timeGraphicView = timeGraphicView;
         this._categoryBarChartView = categoryBarChartView;
+        this._geoChartView = geoChartView;
     }
 
     _createClass(IndexController, [{
@@ -17575,6 +17585,7 @@ var IndexController = function () {
         value: function start() {
             this._setUpTimeGraphicView();
             this._setUpCategoryPanelView();
+            this._setUpGeoChartView();
         }
     }, {
         key: "_setUpTimeGraphicView",
@@ -17584,10 +17595,12 @@ var IndexController = function () {
             this._tfmModel.getDocumentsByDate(function (data) {
                 var dates = [];
                 var numberOfDocumentsPerDate = [];
+
                 data.forEach(function (currentValue) {
                     dates.push(currentValue["key_as_string"]);
                     numberOfDocumentsPerDate.push(currentValue["doc_count"]);
                 });
+
                 _this._timeGraphicView.createLineChart(dates, numberOfDocumentsPerDate);
             });
         }
@@ -17599,15 +17612,33 @@ var IndexController = function () {
             this._tfmModel.getDocumentsByCategory(function (data) {
                 var categories = [];
                 var numberOfDocumentsPerCategory = [];
+
                 data.forEach(function (currentValue) {
                     categories.push(currentValue.key);
                     numberOfDocumentsPerCategory.push(currentValue.doc_count);
                 });
-                _this2._categoryBarChartView.start(categories, numberOfDocumentsPerCategory);
+
+                _this2._categoryBarChartView.createBarChart(categories, numberOfDocumentsPerCategory);
+
                 _this2._categoryBarChartView.on('clickInBar', function (data) {
-                    console.log(data);
                     $(location).attr('href', '/Category/' + data.activePoints[0]._model.label);
                 });
+            });
+        }
+    }, {
+        key: "_setUpGeoChartView",
+        value: function _setUpGeoChartView() {
+            var _this3 = this;
+
+            this._tfmModel.getDocumentsByLocation(function (data) {
+                var geoChartData = [['Country', 'Number of Documents']];
+                data.forEach(function (currentValue) {
+                    if (currentValue.key !== "undefined") {
+                        geoChartData.push([currentValue.key, currentValue.doc_count]);
+                    }
+                });
+
+                _this3._geoChartView.createGeoChart(geoChartData);
             });
         }
     }]);
@@ -17632,6 +17663,12 @@ var TfmModel = {
     },
     getCategoryDocumentsByDate: function getCategoryDocumentsByDate(category, callback) {
         $.getJSON("/Category/DocumentsByDate/" + category, callback);
+    },
+    getDocumentsByLocation: function getDocumentsByLocation(callback) {
+        $.getJSON("DocumentsByLocation", callback);
+    },
+    getCategoryDocumentsByLocation: function getCategoryDocumentsByLocation(category, callback) {
+        $.getJSON("/Category/DocumentsByLocation/" + category, callback);
     }
 };
 
@@ -17675,14 +17712,8 @@ var BarChartView = function (_EventEmitter) {
     }
 
     _createClass(BarChartView, [{
-        key: 'start',
-        value: function start(labels, data) {
-            this._createBarChart(labels, data);
-            //this._setUpRedirectFunctionality();
-        }
-    }, {
-        key: '_createBarChart',
-        value: function _createBarChart(labels, data) {
+        key: 'createBarChart',
+        value: function createBarChart(labels, data) {
             var _this2 = this;
 
             var barChartData = {
@@ -17725,6 +17756,59 @@ var BarChartView = function (_EventEmitter) {
 exports.default = BarChartView;
 
 },{"chart.js":1,"events":49}],55:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var GeoChartView = function () {
+    function GeoChartView(_ref) {
+        var element = _ref.element;
+
+        _classCallCheck(this, GeoChartView);
+
+        this._element = element;
+    }
+
+    _createClass(GeoChartView, [{
+        key: 'createGeoChart',
+        value: function createGeoChart(data) {
+            var _this = this;
+
+            google.charts.load('current', { 'packages': ['geochart'] });
+            google.charts.setOnLoadCallback(function () {
+                _this._drawVisualization(data, _this._element);
+            });
+        }
+    }, {
+        key: '_drawVisualization',
+        value: function _drawVisualization(data, element) {
+
+            var formatedData = google.visualization.arrayToDataTable(data);
+
+            var options = {
+                colorAxis: { colors: ['#9dff6c', '#1d6700'] },
+                datalessRegionColor: 'white',
+                backgroundColor: '#D8D8D8'
+            };
+
+            var chart = new google.visualization.GeoChart(element);
+
+            chart.draw(formatedData, options);
+        }
+    }]);
+
+    return GeoChartView;
+}();
+
+exports.default = GeoChartView;
+
+},{}],56:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

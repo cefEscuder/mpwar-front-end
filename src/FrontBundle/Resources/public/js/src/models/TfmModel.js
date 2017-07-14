@@ -10,6 +10,14 @@ const TfmModel = {
 
     getCategoryDocumentsByDate(category,callback){
         $.getJSON("/Category/DocumentsByDate/"+category, callback);
+    },
+
+    getDocumentsByLocation(callback){
+        $.getJSON("DocumentsByLocation", callback);
+    },
+
+    getCategoryDocumentsByLocation(category,callback){
+        $.getJSON("/Category/DocumentsByLocation/"+category, callback);
     }
 };
 

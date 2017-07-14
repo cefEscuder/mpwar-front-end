@@ -1,19 +1,20 @@
 <?php
 
-namespace FrontBundle\Application;
+namespace FrontBundle\Application\UseCase;
+
 
 use FrontBundle\Domain\Repository\DocumentRepository;
 
-class GetTotalDocumentsUseCase
+class GetDocumentsByLocation
 {
-
     public function __construct(DocumentRepository $documentRepository)
     {
         $this->documentRepository = $documentRepository;
     }
 
-    public function execute()
+    public function execute($category = null)
     {
-        return $this->documentRepository->getTotalNumberOfDocuments();
+        return $this->documentRepository->getNumberOfDocumentsByLocation($category);
     }
+
 }

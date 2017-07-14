@@ -1,10 +1,10 @@
 <?php
 
-namespace FrontBundle\Application;
+namespace FrontBundle\Application\UseCase;
 
 use FrontBundle\Domain\Repository\DocumentRepository;
 
-class GetDocumentsByCategoryUseCase
+class GetTotalDocuments
 {
 
     public function __construct(DocumentRepository $documentRepository)
@@ -12,8 +12,8 @@ class GetDocumentsByCategoryUseCase
         $this->documentRepository = $documentRepository;
     }
 
-    public function execute() :array
+    public function execute()
     {
-        return $this->documentRepository->getNumberOfDocumentsByCategory();
+        return $this->documentRepository->getTotalNumberOfDocuments();
     }
 }

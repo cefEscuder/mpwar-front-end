@@ -1,17 +1,17 @@
 <?php
 
-namespace FrontBundle\Application;
+namespace FrontBundle\Application\UseCase;
 
 use FrontBundle\Domain\Repository\DocumentRepository;
 
-class GetDocumentsByDateUseCase
+class GetDocumentsByDate
 {
     public function __construct(DocumentRepository $documentRepository)
     {
         $this->documentRepository = $documentRepository;
     }
 
-    public function execute($category=null)
+    public function execute($category = null)
     {
         return $this->documentRepository->getNumberOfDocumentsByDate($category);
     }

@@ -86,4 +86,5 @@ fos_elastica:
                         author: ~
                         author_location: ~
                         language: ~
+                        sentiment: ~
 

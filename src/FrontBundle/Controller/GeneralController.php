@@ -2,7 +2,7 @@
 
 namespace FrontBundle\Controller;
 
-use FrontBundle\Application\GetAverageSentimentUseCase;
+use FrontBundle\Application\UseCase\GetAverageSentiment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -22,9 +22,9 @@ class GeneralController extends Controller
      */
     public function categoryAction($category)
     {
-        /** @var GetAverageSentimentUseCase $getAverageSentimentUseCase */
-        $getAverageSentimentUseCase = $this->get("average_sentiment_use_case");
-        $averageSentiment = $getAverageSentimentUseCase->execute($category);
+        /** @var GetAverageSentiment $getAverageSentiment */
+        $getAverageSentiment = $this->get("average_sentiment_use_case");
+        $averageSentiment = $getAverageSentiment->execute($category);
 
         return $this->render(
             'FrontBundle:general:category.html.twig',

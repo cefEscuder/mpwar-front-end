@@ -19,22 +19,27 @@ services:
             - "@es_repository"
 
     documents_by_date_use_case:
-            class: FrontBundle\Application\GetDocumentsByDateUseCase
+            class: FrontBundle\Application\UseCase\GetDocumentsByDate
             arguments:
                 - "@es_repository"
 
     documents_by_category_use_case:
-                class: FrontBundle\Application\GetDocumentsByCategoryUseCase
+                class: FrontBundle\Application\UseCase\GetDocumentsByCategory
                 arguments:
                     - "@es_repository"
 
+    documents_by_location_use_case:
+                    class: FrontBundle\Application\UseCase\GetDocumentsByLocation
+                    arguments:
+                        - "@es_repository"
+
     total_documents_use_case:
-                class: FrontBundle\Application\GetTotalDocumentsUseCase
+                class: FrontBundle\Application\UseCase\GetTotalDocuments
                 arguments:
                     - "@es_repository"
 
     average_sentiment_use_case:
-                    class: FrontBundle\Application\GetAverageSentimentUseCase
+                    class: FrontBundle\Application\UseCase\GetAverageSentiment
                     arguments:
                         - "@es_repository"
 

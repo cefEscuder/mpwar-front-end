@@ -28,7 +28,7 @@ class ESDocumentRepository implements DocumentRepository
         $this->esIndex = $index;
     }
 
-    public function add(DocumentCollection $documents) :void
+    public function add(DocumentCollection $documents): void
     {
         $this->esIndex->addDocuments($documents->getArray());
     }
@@ -66,23 +66,36 @@ class ESDocumentRepository implements DocumentRepository
         return $result->getTotalHits();
     }
 
-    public function getAverageSentiment($category = null) :array
+    public function getAverageSentiment($category = null): array
     {
         $query = $this->selectTypeOfQuery($category);
         $query->setSize(self::QUERY_SIZE);
         $sentimentAggregation = new Avg('average_sentiment');
         $sentimentAggregation->setField('sentiment');
         $query->addAggregation($sentimentAggregation);
-        $results= $this->esIndex->search($query);
+        $results = $this->esIndex->search($query);
         $aggregations = $results->getAggregations();
         return $aggregations;
     }
 
-    private function selectTypeOfQuery($category){
+    public function getNumberOfDocumentsByLocation($category = null): array
+    {
+        $query = $this->selectTypeOfQuery($category);
+        $query->setSize(self::QUERY_SIZE);
+        $sentimentAggregation = new Terms('location');
+        $sentimentAggregation->setField('author_location');
+        $query->addAggregation($sentimentAggregation);
+        $results = $this->esIndex->search($query);
+        $aggregations = $results->getAggregations();
+        return $aggregations['location']["buckets"];
+    }
+
+    private function selectTypeOfQuery($category)
+    {
         $query = null;
-        if($category === null){
+        if ($category === null) {
             $query = new Query(new MatchAll());
-        }else{
+        } else {
             $query = new Query(new Match(self::MATCHING_FIELD, $category));
         }
         return $query;

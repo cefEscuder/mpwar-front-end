@@ -17,7 +17,8 @@ class FakeQueue
                 'created_at' => '2017-05-13',
                 'author_name' => 'test',
                 'author_location' => 'France',
-                'language' => 'es'
+                'language' => 'es',
+                'sentiment' => -0.5
             ]),
             json_encode([
                 'source' => 'forum',
@@ -27,7 +28,8 @@ class FakeQueue
                 'created_at' => '2017-05-13',
                 'author_name' => 'test',
                 'author_location' => 'France',
-                'language' => 'es'
+                'language' => 'es',
+                'sentiment' => 0.8
             ])
         ];
     }

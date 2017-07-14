@@ -17222,19 +17222,27 @@ var _CategoryController = require('./controllers/CategoryController');
 
 var _CategoryController2 = _interopRequireDefault(_CategoryController);
 
+var _GeoChartView = require('./views/GeoChartView');
+
+var _GeoChartView2 = _interopRequireDefault(_GeoChartView);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var timeGraphicViewCanvas = document.getElementById("timeEvolution");
 var timeGraphicView = new _LineChartView2.default({ element: timeGraphicViewCanvas });
 
+var geoChartCanvas = document.getElementById("map");
+var geoChartView = new _GeoChartView2.default({ element: geoChartCanvas });
+
 var categoryController = new _CategoryController2.default({
     tfmModel: _TfmModel2.default,
-    timeGraphicView: timeGraphicView
+    timeGraphicView: timeGraphicView,
+    geoChartView: geoChartView
 });
 
 categoryController.start();
 
-},{"./controllers/CategoryController":51,"./models/TfmModel":52,"./views/LineChartView":53}],51:[function(require,module,exports){
+},{"./controllers/CategoryController":51,"./models/TfmModel":52,"./views/GeoChartView":53,"./views/LineChartView":54}],51:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -17248,18 +17256,22 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var CategoryController = function () {
     function CategoryController(_ref) {
         var tfmModel = _ref.tfmModel,
-            timeGraphicView = _ref.timeGraphicView;
+            timeGraphicView = _ref.timeGraphicView,
+            geoChartView = _ref.geoChartView;
 
         _classCallCheck(this, CategoryController);
 
         this._tfmModel = tfmModel;
         this._timeGraphicView = timeGraphicView;
+        this._geoChartView = geoChartView;
+        this._categoryName = document.querySelectorAll('[data-category]')[0].getAttribute('data-category');
     }
 
     _createClass(CategoryController, [{
         key: 'start',
         value: function start() {
             this._setUpTimeGraphicView();
+            this._setUpGeoChartView();
         }
     }, {
         key: '_setUpTimeGraphicView',
@@ -17267,15 +17279,33 @@ var CategoryController = function () {
             var _this = this;
 
             var category = document.querySelectorAll('[data-category]')[0].getAttribute('data-category');
-            console.log(category);
-            this._tfmModel.getCategoryDocumentsByDate(category, function (data) {
+
+            this._tfmModel.getCategoryDocumentsByDate(this._categoryName, function (data) {
                 var dates = [];
                 var numberOfDocumentsPerDate = [];
+
                 data.forEach(function (currentValue) {
                     dates.push(currentValue["key_as_string"]);
                     numberOfDocumentsPerDate.push(currentValue["doc_count"]);
                 });
+
                 _this._timeGraphicView.createLineChart(dates, numberOfDocumentsPerDate);
+            });
+        }
+    }, {
+        key: '_setUpGeoChartView',
+        value: function _setUpGeoChartView() {
+            var _this2 = this;
+
+            this._tfmModel.getCategoryDocumentsByLocation(this._categoryName, function (data) {
+                var geoChartData = [['Country', 'Number of Documents']];
+                data.forEach(function (currentValue) {
+                    if (currentValue.key !== "undefined") {
+                        geoChartData.push([currentValue.key, currentValue.doc_count]);
+                    }
+                });
+
+                _this2._geoChartView.createGeoChart(geoChartData);
             });
         }
     }]);
@@ -17300,12 +17330,71 @@ var TfmModel = {
     },
     getCategoryDocumentsByDate: function getCategoryDocumentsByDate(category, callback) {
         $.getJSON("/Category/DocumentsByDate/" + category, callback);
+    },
+    getDocumentsByLocation: function getDocumentsByLocation(callback) {
+        $.getJSON("DocumentsByLocation", callback);
+    },
+    getCategoryDocumentsByLocation: function getCategoryDocumentsByLocation(category, callback) {
+        $.getJSON("/Category/DocumentsByLocation/" + category, callback);
     }
 };
 
 exports.default = TfmModel;
 
 },{}],53:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var GeoChartView = function () {
+    function GeoChartView(_ref) {
+        var element = _ref.element;
+
+        _classCallCheck(this, GeoChartView);
+
+        this._element = element;
+    }
+
+    _createClass(GeoChartView, [{
+        key: 'createGeoChart',
+        value: function createGeoChart(data) {
+            var _this = this;
+
+            google.charts.load('current', { 'packages': ['geochart'] });
+            google.charts.setOnLoadCallback(function () {
+                _this._drawVisualization(data, _this._element);
+            });
+        }
+    }, {
+        key: '_drawVisualization',
+        value: function _drawVisualization(data, element) {
+
+            var formatedData = google.visualization.arrayToDataTable(data);
+
+            var options = {
+                colorAxis: { colors: ['#9dff6c', '#1d6700'] },
+                datalessRegionColor: 'white',
+                backgroundColor: '#D8D8D8'
+            };
+
+            var chart = new google.visualization.GeoChart(element);
+
+            chart.draw(formatedData, options);
+        }
+    }]);
+
+    return GeoChartView;
+}();
+
+exports.default = GeoChartView;
+
+},{}],54:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

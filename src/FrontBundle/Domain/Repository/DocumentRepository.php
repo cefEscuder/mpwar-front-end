@@ -6,7 +6,7 @@ use FrontBundle\Domain\ValueObject\DocumentCollection;
 
 interface DocumentRepository
 {
-    public function add(DocumentCollection $documents) : void;
+    public function add(DocumentCollection $documents): void;
 
     public function getNumberOfDocumentsByDate($category = null): array;
 
@@ -14,5 +14,7 @@ interface DocumentRepository
 
     public function getTotalNumberOfDocuments(): string;
 
-    public function getAverageSentiment($category = null) :array;
+    public function getAverageSentiment($category = null): array;
+
+    public function getNumberOfDocumentsByLocation($category = null): array;
 }
