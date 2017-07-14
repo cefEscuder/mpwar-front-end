@@ -1,7 +1,7 @@
 /.web-server-pid
 /app/config/parameters.yml
 /build/
-/node_modules/
+/src/FrontBundle/Resources/public/js/node_modules
 /phpunit.xml
 /var/*
 !/var/cache
