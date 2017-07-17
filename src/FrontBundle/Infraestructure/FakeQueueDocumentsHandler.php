@@ -8,9 +8,6 @@ use FrontBundle\Domain\ValueObject\DocumentCollection;
 
 class FakeQueueDocumentsHandler implements QueueDocumentsHandler
 {
-
-    const INDEX = "TFM_document";
-    const MAPPING = "document";
     private $fakeQueue;
 
     public function __construct(FakeQueue $fakeQueue)

@@ -88,3 +88,15 @@ fos_elastica:
                         language: ~
                         sentiment: ~
 
+
+#aws-sdk-symfony-configuration
+aws:
+    version: latest
+    region: eu-west-1
+    credentials:
+        key: "%aws_key%"
+        secret: "%aws_secret%"
+
+
+
+

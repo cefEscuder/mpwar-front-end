@@ -6,5 +6,8 @@ use FrontBundle\Domain\ValueObject\DocumentCollection;
 
 interface QueueDocumentsHandler
 {
+    const INDEX = "TFM_document";
+    const MAPPING = "document";
+
     public function getDocuments(): DocumentCollection;
 }

@@ -7,6 +7,12 @@ services:
         arguments:
             - "@fake_queue"
 
+    amazon_sqs_document_handler:
+        class: FrontBundle\Infraestructure\AmazonSqsQueueDocumentsHandler
+        arguments:
+            - "@aws.sqs"
+            -  "https://sqs.eu-west-1.amazonaws.com/486488213723/mpwar_tfm"
+
     es_repository:
         class: FrontBundle\Infraestructure\ESDocumentRepository
         arguments:
@@ -15,7 +21,7 @@ services:
     document_saver:
         class: FrontBundle\Application\DocumentSaver
         arguments:
-            - "@fake_queue_document_handler"
+            - "@amazon_sqs_document_handler"
             - "@es_repository"
 
     documents_by_date_use_case:
