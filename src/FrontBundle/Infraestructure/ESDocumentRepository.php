@@ -30,6 +30,11 @@ class ESDocumentRepository implements DocumentRepository
 
     public function add(DocumentCollection $documents): void
     {
+        foreach($documents->getArray() as $document){
+            if($document['sentiment'] === 'undefined'){
+                $document['sentiment'] = 0.0;
+            }
+        }
         $this->esIndex->addDocuments($documents->getArray());
     }
 
