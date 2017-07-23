@@ -1,0 +1,6 @@
+[webserver-es]
+52.48.200.140 ansible_user=ubuntu
+
+[webserver-front]
+34.252.76.234 ansible_user=ubuntu
+52.48.200.140 ansible_user=ubuntu

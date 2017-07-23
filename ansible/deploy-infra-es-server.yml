@@ -1,0 +1,8 @@
+- hosts: webserver-es
+  become: true
+  become_user: root
+  vars_files:
+    - vars/infra-es-server.yml
+  roles:
+    - { role: geerlingguy.java }
+    - { role: geerlingguy.elasticsearch }

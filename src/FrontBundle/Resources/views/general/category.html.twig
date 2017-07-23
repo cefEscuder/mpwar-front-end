@@ -37,9 +37,5 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts
-        '@FrontBundle/Resources/public/js/dist/category.js'
-    %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    <script type="text/javascript" src="http://dr6rfcu3k9b1o.cloudfront.net/bundles/front/js/dist/category.min.js"></script>
 {% endblock %}

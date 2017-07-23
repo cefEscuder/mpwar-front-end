@@ -72,7 +72,7 @@ swiftmailer:
 #ElasticSearch Client configuration
 fos_elastica:
     clients:
-        default: {host: localhost, port: 9200}
+        default: {host: "%es_server%", port: 9200}
     indexes:
         tfm_document:
             types:

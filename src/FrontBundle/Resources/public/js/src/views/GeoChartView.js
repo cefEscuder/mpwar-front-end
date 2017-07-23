@@ -4,7 +4,13 @@ class GeoChartView{
     }
 
     createGeoChart(data){
-        google.charts.load('current', {'packages':['geochart']});
+        google.charts.load(
+            'current',
+            {
+                'packages':['geochart'],
+                'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+            }
+        );
         google.charts.setOnLoadCallback(()=>{
                this._drawVisualization(data,this._element);
         });

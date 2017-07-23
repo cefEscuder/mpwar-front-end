@@ -1,0 +1,7 @@
+- hosts: webserver-front
+  become: true
+  become_user: root
+  vars_files:
+    - vars/code.yml
+  roles:
+    - { role: carlosbuenosvinos.ansistrano-deploy }

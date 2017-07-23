@@ -17366,7 +17366,10 @@ var GeoChartView = function () {
         value: function createGeoChart(data) {
             var _this = this;
 
-            google.charts.load('current', { 'packages': ['geochart'] });
+            google.charts.load('current', {
+                'packages': ['geochart'],
+                'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+            });
             google.charts.setOnLoadCallback(function () {
                 _this._drawVisualization(data, _this._element);
             });

@@ -19,6 +19,15 @@ class DocumentSaver
     public function execute()
     {
         $documents = $this->queueDocumentsHandler->getDocuments();
+        if($this->isCollectionEmpty($documents)){
+            return;
+        }
         $this->documentRepository->add($documents);
+    }
+
+
+    private function isCollectionEmpty($documents): bool
+    {
+        return $documents->count() == 0;
     }
 }
